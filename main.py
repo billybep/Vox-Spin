@@ -1,5 +1,6 @@
 import fastapi
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 import firebase_admin
 from firebase_admin import credentials, firestore
@@ -560,3 +561,7 @@ async def blast_followup(background_tasks: fastapi.BackgroundTasks):
         return {"status": "success", "message": f"Proses Blast Follow-Up ke {len(pending_list)} bisnis sedang berjalan di sistem."}
     except Exception as e:
         raise fastapi.HTTPException(status_code=500, detail=str(e))
+
+# --- MOUNT STATIC FILES ---
+# Letakkan di baris paling bawah untuk memastikan tidak menimpa endpoint API
+app.mount("/", StaticFiles(directory=".", html=True), name="static")

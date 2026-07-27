@@ -1,0 +1,11 @@
+# Environments
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Firebase Credentials
+firebase-service-account.json
+voxspin-*.json

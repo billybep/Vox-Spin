@@ -47,13 +47,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-SMTP_SERVER = os.getenv("SMTP_SERVER", "smtp.gmail.com")
-SMTP_PORT = int(os.getenv("SMTP_PORT", 587))
-SENDER_EMAIL = os.getenv("SENDER_EMAIL")
-SENDER_PASSWORD = os.getenv("SENDER_PASSWORD")
-FONNTE_TOKEN = os.getenv("FONNTE_TOKEN")
-GHL_API_KEY = os.getenv("GHL_API_KEY")
-GHL_LOCATION_ID = os.getenv("GHL_LOCATION_ID")
+# Konfigurasi SMTP langsung di-set ke Hostinger (port 465 SSL)
+SMTP_SERVER = os.getenv("SMTP_SERVER", "smtp.hostinger.com")
+SMTP_PORT = int(os.getenv("SMTP_PORT", 465))
+SENDER_EMAIL = os.getenv("SENDER_EMAIL", "adrian@voxlumedia.com")
+SENDER_PASSWORD = os.getenv("SENDER_PASSWORD", "Adrian_080808")
+FONNTE_TOKEN = os.getenv("FONNTE_TOKEN", "MASUKKAN_TOKEN_FONNTE_ANDA_DISINI")
+GHL_API_KEY = os.getenv("GHL_API_KEY", "")
+GHL_LOCATION_ID = os.getenv("GHL_LOCATION_ID", "")
 
 # 3. Data Models
 class Participant(BaseModel):
@@ -90,10 +91,17 @@ def send_email(to_email: str, subject: str, html_content: str):
         msg["To"] = to_email
         part = MIMEText(html_content, "html")
         msg.attach(part)
-        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
-            server.starttls()
-            server.login(SENDER_EMAIL, SENDER_PASSWORD)
-            server.sendmail(SENDER_EMAIL, to_email, msg.as_string())
+        
+        # Menggunakan SMTP_SSL untuk port 465 Hostinger
+        if SMTP_PORT == 465:
+            with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT) as server:
+                server.login(SENDER_EMAIL, SENDER_PASSWORD)
+                server.sendmail(SENDER_EMAIL, to_email, msg.as_string())
+        else:
+            with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+                server.starttls()
+                server.login(SENDER_EMAIL, SENDER_PASSWORD)
+                server.sendmail(SENDER_EMAIL, to_email, msg.as_string())
     except Exception as e:
         print(f"Failed to send email to {to_email}: {e}")
 

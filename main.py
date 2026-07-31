@@ -47,7 +47,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Konfigurasi SMTP langsung di-set ke Hostinger (port 465 SSL)
+# Ubah default server ke Hostinger
 SMTP_SERVER = os.getenv("SMTP_SERVER", "smtp.hostinger.com")
 SMTP_PORT = int(os.getenv("SMTP_PORT", 465))
 SENDER_EMAIL = os.getenv("SENDER_EMAIL", "adrian@voxlumedia.com")
@@ -92,16 +92,10 @@ def send_email(to_email: str, subject: str, html_content: str):
         part = MIMEText(html_content, "html")
         msg.attach(part)
         
-        # Menggunakan SMTP_SSL untuk port 465 Hostinger
-        if SMTP_PORT == 465:
-            with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT) as server:
-                server.login(SENDER_EMAIL, SENDER_PASSWORD)
-                server.sendmail(SENDER_EMAIL, to_email, msg.as_string())
-        else:
-            with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
-                server.starttls()
-                server.login(SENDER_EMAIL, SENDER_PASSWORD)
-                server.sendmail(SENDER_EMAIL, to_email, msg.as_string())
+        # Menggunakan SMTP_SSL khusus untuk port 465 Hostinger
+        with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT) as server:
+            server.login(SENDER_EMAIL, SENDER_PASSWORD)
+            server.sendmail(SENDER_EMAIL, to_email, msg.as_string())
     except Exception as e:
         print(f"Failed to send email to {to_email}: {e}")
 

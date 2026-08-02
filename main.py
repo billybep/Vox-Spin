@@ -303,3 +303,14 @@ def delete_participant(doc_id: str):
     return {"status": "success", "message": "Record deleted successfully"}
 
 app.mount("/", StaticFiles(directory=".", html=True), name="static")
+@app.delete("/api/participants")
+def clear_all_participants():
+    try:
+        docs = db.collection("participants").stream()
+        deleted_count = 0
+        for doc in docs:
+            doc.reference.delete()
+            deleted_count += 1
+        return {"status": "success", "message": f"Successfully deleted {deleted_count} records."}
+    except Exception as e:
+        raise fastapi.HTTPException(status_code=500, detail=str(e))

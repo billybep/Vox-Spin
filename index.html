@@ -1,0 +1,3123 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="description"
+    content="VoxSpin by Voxlumedia. Join our weekly giveaway to win free premium design assets for your business." />
+  <title>VoxSpin | Weekly Free Design Giveaway by Voxlumedia</title>
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <!-- GSAP for Animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* =========================================
+         RESET & CORE VARIABLES
+         ========================================= */
+    :root {
+      --bg-dark: #03050a;
+      --bg-panel: rgba(15, 22, 42, 0.65);
+      --primary: #00f2fe;
+      --secondary: #8b5cf6;
+      --accent: #f59e0b;
+      --pink-glow: #f43f5e;
+      --danger: #ef4444;
+
+      --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      --gradient-gold: linear-gradient(135deg, #fcd34d 0%, #f59e0b 100%);
+
+      --border-thin: rgba(255, 255, 255, 0.12);
+      --text-light: #f8f9fa;
+      --text-dim: #9ca3af;
+
+      --font-display: 'Outfit', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --font-nav: 'Space Grotesk', sans-serif;
+    }
+
+    body,
+    html {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100vw !important;
+      max-width: 100vw !important;
+      overflow-x: hidden !important;
+      background-color: var(--bg-dark);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--text-dim);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      position: relative;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: 0.3s;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--text-light);
+      margin: 0 0 15px 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      width: 100%;
+      position: relative;
+      z-index: 10;
+    }
+
+    .section-pad {
+      padding: 100px 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    .text-gradient {
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .text-gold {
+      background: var(--gradient-gold);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* --- GLOBAL BACKGROUND MESH & GRID --- */
+    .vxl-bg-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .grid-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.35;
+      background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+
+    .bg-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(140px);
+      opacity: 0.22;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .orb-1 {
+      top: -10vh;
+      left: -10vw;
+      width: 50vw;
+      height: 50vw;
+      background: var(--primary);
+    }
+
+    .orb-2 {
+      top: 35vh;
+      right: -10vw;
+      width: 45vw;
+      height: 45vw;
+      background: var(--secondary);
+    }
+
+    .orb-3 {
+      bottom: -10vh;
+      left: 20vw;
+      width: 40vw;
+      height: 40vw;
+      background: var(--accent);
+    }
+
+    /* --- BUTTONS --- */
+    .btn-glow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px 36px;
+      border-radius: 50px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      background: rgba(0, 242, 254, 0.05);
+      border: 2px solid var(--primary);
+      color: var(--primary) !important;
+      transition: all 0.4s ease;
+      cursor: pointer;
+      box-shadow: 0 0 25px rgba(0, 242, 254, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-glow:hover:not(:disabled) {
+      background: var(--primary) !important;
+      color: #03050a !important;
+      box-shadow: 0 0 35px rgba(0, 242, 254, 0.5) !important;
+      transform: translateY(-3px);
+    }
+
+    .btn-glow:disabled {
+      background: rgba(255, 255, 255, 0.05) !important;
+      border-color: var(--border-thin) !important;
+      color: var(--text-dim) !important;
+      cursor: not-allowed;
+      box-shadow: none !important;
+      transform: none !important;
+    }
+
+    .btn-solid-primary {
+      border-color: var(--primary);
+      color: var(--primary) !important;
+      background: rgba(0, 242, 254, 0.05);
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.15);
+    }
+
+    .btn-orange {
+      background: rgba(245, 158, 11, 0.1);
+      border: 2px solid var(--accent);
+      color: var(--accent) !important;
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+    }
+
+    .hero-btn-container {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    /* --- NAVBAR --- */
+    .vxl-nav {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 40px);
+      max-width: 1160px;
+      padding: 15px 30px;
+      z-index: 10000;
+      background: rgba(10, 10, 15, 0.7);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 1px solid rgba(0, 242, 254, 0.2);
+      border-radius: 999px;
+      transition: all 0.4s ease;
+      font-family: var(--font-nav);
+    }
+
+    .vxl-nav.vxl-scrolled {
+      top: 10px;
+      background: rgba(3, 5, 10, 0.95);
+      border-color: rgba(0, 242, 254, 0.5);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 242, 254, 0.15);
+    }
+
+    .vxl-nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+
+    .vxl-logo {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-light) !important;
+      z-index: 1001;
+      padding: 5px 0;
+    }
+
+    .vxl-logo img {
+      transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      height: 40px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .vxl-logo:hover img {
+      transform: scale(1.08) !important;
+    }
+
+    .vxl-nav-links {
+      display: flex;
+      gap: 35px;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .vxl-nav-link {
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-dim) !important;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .vxl-nav-link:hover {
+      color: var(--text-light) !important;
+      text-shadow: 0 0 10px var(--primary);
+    }
+
+    .vxl-nav-item-has-menu {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .vxl-mega-menu {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      width: 800px;
+      background: rgba(5, 7, 15, 0.98);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-thin);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 242, 254, 0.1);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      z-index: 100;
+      text-align: left;
+    }
+
+    .vxl-nav-item-has-menu:hover .vxl-mega-menu {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(10px);
+    }
+
+    .vxl-mega-menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .vxl-mega-menu-col h5 {
+      font-size: 0.8rem;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 15px;
+      border-bottom: 1px solid var(--border-thin);
+      padding-bottom: 8px;
+    }
+
+    .vxl-mega-menu-col a {
+      display: block;
+      color: var(--text-dim) !important;
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+    }
+
+    .vxl-mega-menu-col a:hover {
+      color: var(--text-light) !important;
+      transform: translateX(5px);
+    }
+
+    .vxl-mega-menu.dropdown-small {
+      width: 160px;
+      left: auto;
+      right: 0;
+      transform: translateY(20px);
+      padding: 15px;
+    }
+
+    .vxl-nav-item-has-menu:hover .vxl-mega-menu.dropdown-small {
+      transform: translateY(10px);
+    }
+
+    .vxl-mega-menu.dropdown-small a {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-thin);
+      margin-bottom: 0;
+    }
+
+    .vxl-mega-menu.dropdown-small a:last-child {
+      border-bottom: none;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      padding: 5px;
+      z-index: 1001;
+    }
+
+    .hamburger span {
+      width: 26px;
+      height: 2px;
+      background: var(--text-light);
+      transition: 0.3s;
+      border-radius: 2px;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    /* MOBILE MENU OVERLAY */
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(3, 5, 10, 0.98);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      padding: 100px 20px 40px;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.4s ease;
+      overflow-y: auto;
+    }
+
+    .mobile-menu-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .mobile-nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 100%;
+      text-align: left;
+    }
+
+    .mobile-nav-link {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-light) !important;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+    }
+
+    .mobile-nav-item {
+      display: flex;
+      flex-direction: column;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 20px;
+    }
+
+    .mobile-dropdown-toggle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mobile-dropdown-toggle i {
+      transition: transform 0.3s ease;
+    }
+
+    .mobile-dropdown-toggle.active i {
+      transform: rotate(180deg);
+      color: var(--primary);
+    }
+
+    .mobile-dropdown-menu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    .mobile-nav-item.active .mobile-dropdown-menu {
+      margin-top: 25px;
+    }
+
+    .mobile-dropdown-group h5 {
+      color: var(--primary);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+      font-family: var(--font-body);
+    }
+
+    .mobile-dropdown-group a {
+      display: block;
+      color: var(--text-dim) !important;
+      font-size: 1rem;
+      margin-bottom: 12px;
+      font-family: var(--font-body);
+      font-weight: 500;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .mobile-menu-btn {
+      margin-top: 40px;
+      width: 100%;
+      padding: 18px;
+      text-align: center;
+      background: rgba(0, 242, 254, 0.1);
+      border: 2px solid var(--primary);
+      color: var(--primary) !important;
+      border-radius: 50px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    /* --- HERO SECTION --- */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding-top: 130px;
+      text-align: left;
+      z-index: 10;
+      overflow: hidden;
+    }
+
+    .hero-grid-split {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+      width: 100%;
+    }
+
+    .hero-content-split {
+      flex: 1.2;
+      position: relative;
+      z-index: 10;
+    }
+
+    .hero-visual-split {
+      flex: 0.8;
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 20px;
+      border-radius: 50px;
+      background: rgba(0, 242, 254, 0.1);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 25px;
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.15);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      margin-bottom: 25px;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-dim);
+      max-width: 600px;
+      margin-bottom: 45px;
+      line-height: 1.7;
+    }
+
+    .mascot-hero-img {
+      width: 100%;
+      max-width: 420px;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6));
+      animation: floatMascot 6s ease-in-out infinite alternate;
+      position: relative;
+      z-index: 5;
+    }
+
+    @keyframes floatMascot {
+      0% {
+        transform: translateY(0);
+      }
+
+      100% {
+        transform: translateY(-20px);
+      }
+    }
+
+    /* --- GIVEAWAY SECTION --- */
+    .giveaway-section {
+      padding: 40px 0 100px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .giveaway-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .glass-card {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--border-thin);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border-radius: 32px;
+      padding: 40px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 0 30px rgba(255, 255, 255, 0.02);
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .weekly-countdown-widget {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(0, 242, 254, 0.1));
+      border: 1px solid rgba(0, 242, 254, 0.3);
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 25px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .countdown-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .countdown-timers-grid {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .time-box {
+      background: rgba(3, 5, 10, 0.6);
+      border: 1px solid var(--border-thin);
+      border-radius: 12px;
+      padding: 10px 14px;
+      min-width: 60px;
+    }
+
+    .time-val {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .time-lbl {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-top: 4px;
+    }
+
+    .wheel-area-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 20px 0 30px;
+      width: 100%;
+    }
+
+    .wheel-container {
+      position: relative;
+      width: 550px;
+      height: 550px;
+      max-width: 100%;
+      aspect-ratio: 1/1;
+      filter: drop-shadow(0 20px 40px rgba(0, 242, 254, 0.3));
+    }
+
+    #wheel-canvas {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 12px solid rgba(255, 255, 255, 0.08);
+      background: #05070f;
+      box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.9);
+    }
+
+    .wheel-pointer {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 18px solid transparent;
+      border-right: 18px solid transparent;
+      border-top: 35px solid var(--accent);
+      z-index: 10;
+      filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.8));
+    }
+
+    .wheel-center-hub {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90px;
+      height: 90px;
+      background: var(--gradient-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1rem;
+      color: #03050a;
+      box-shadow: 0 0 30px rgba(0, 242, 254, 0.6);
+      border: 4px solid #fff;
+      z-index: 5;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .wheel-center-hub:hover {
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+
+    .form-input {
+      width: 100%;
+      background: rgba(3, 5, 10, 0.5);
+      border: 1px solid var(--border-thin);
+      border-radius: 14px;
+      padding: 16px 20px;
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      margin-bottom: 18px;
+      transition: 0.3s;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: rgba(15, 22, 42, 0.9);
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.15);
+    }
+
+    .form-input option {
+      background: var(--bg-dark);
+      color: #fff;
+    }
+
+    .registration-rule-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 25px;
+      position: relative;
+    }
+
+    .rule-title {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .rule-desc {
+      font-size: 0.88rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+
+    .mandatory-ig-highlight {
+      display: inline-block;
+      background: #fff;
+      color: #000;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      margin-top: 5px;
+    }
+
+    .winner-banner {
+      display: none;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid var(--accent);
+      padding: 20px;
+      border-radius: 16px;
+      margin-top: 20px;
+      text-align: center;
+      animation: popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes popIn {
+      from {
+        transform: scale(0.9);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .winner-banner h3 {
+      color: var(--accent);
+      margin-bottom: 5px;
+      font-size: 1.3rem;
+    }
+
+    /* --- 3D LIVE ROSTER CARDS (UPDATED UI) --- */
+    .participant-board {
+      background: transparent;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .participant-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 25px;
+      min-height: 220px;
+    }
+
+    .participant-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .participant-item:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .p-info {
+      flex: 1;
+      min-width: 0;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .p-avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: rgba(139, 92, 246, 0.15);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      color: var(--secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .p-details {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .p-name {
+      font-weight: 800;
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+      white-space: normal;
+      word-break: break-word;
+    }
+
+    .badge-status-group {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .badge-verified {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 5px 12px;
+      background: rgba(16, 185, 129, 0.15);
+      color: #10b981;
+      border-radius: 8px;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      text-transform: uppercase;
+    }
+
+    .social-tags {
+      display: flex;
+      gap: 12px;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 2px;
+    }
+
+    .social-tags span {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .social-tags i {
+      color: var(--primary);
+    }
+
+    /* --- SECTION HEADERS --- */
+    .section-header {
+      text-align: center;
+      margin-bottom: 50px;
+      width: 100%;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .section-header h2 {
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      margin-bottom: 15px;
+      letter-spacing: -1px;
+    }
+
+    .section-header p {
+      font-size: 1.15rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      background: rgba(0, 242, 254, 0.1);
+      padding: 0.4rem 1rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(0, 242, 254, 0.3);
+    }
+
+    /* =========================================
+   CUSTOM TOAST & CONFIRM MODAL SYSTEM
+   ========================================= */
+    #vxl-toast-container {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      z-index: 100000;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      pointer-events: none;
+    }
+
+    .vxl-toast {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      min-width: 280px;
+      max-width: 400px;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: #fff;
+      padding: 16px 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+      transform: translateX(120%);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+      pointer-events: auto;
+      font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
+    }
+
+    .vxl-toast.show {
+      transform: translateX(0);
+    }
+
+    .vxl-toast-icon {
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    .vxl-toast-success .vxl-toast-icon {
+      color: #22c55e;
+    }
+
+    .vxl-toast-error .vxl-toast-icon {
+      color: #ef4444;
+    }
+
+    .vxl-toast-warning .vxl-toast-icon {
+      color: #f59e0b;
+    }
+
+    .vxl-toast-info .vxl-toast-icon {
+      color: #00f2fe;
+    }
+
+    .vxl-toast-message {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      font-weight: 500;
+    }
+
+    .vxl-toast-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      width: 100%;
+      animation: toastProgress 4s linear forwards;
+    }
+
+    .vxl-toast-success .vxl-toast-progress {
+      background: #22c55e;
+    }
+
+    .vxl-toast-error .vxl-toast-progress {
+      background: #ef4444;
+    }
+
+    .vxl-toast-warning .vxl-toast-progress {
+      background: #f59e0b;
+    }
+
+    .vxl-toast-info .vxl-toast-progress {
+      background: #00f2fe;
+    }
+
+    @keyframes toastProgress {
+      to {
+        width: 0%;
+      }
+    }
+
+    /* CUSTOM CONFIRM OVERLAY */
+    #vxl-confirm-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 7, 18, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 100000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.3s ease;
+    }
+
+    #vxl-confirm-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .vxl-confirm-card {
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 35px 30px;
+      width: 90%;
+      max-width: 420px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.03);
+      transform: scale(0.95) translateY(20px);
+      transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      text-align: center;
+      font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
+    }
+
+    #vxl-confirm-overlay.show .vxl-confirm-card {
+      transform: scale(1) translateY(0);
+    }
+
+    .vxl-confirm-icon {
+      font-size: 3.5rem;
+      color: var(--primary, #00f2fe);
+      margin-bottom: 20px;
+      filter: drop-shadow(0 10px 15px rgba(0, 242, 254, 0.3));
+    }
+
+    .vxl-confirm-title {
+      font-family: var(--font-display, var(--font-head, sans-serif));
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .vxl-confirm-desc {
+      font-size: 0.95rem;
+      color: var(--text-dim, var(--text-muted, #9ca3af));
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    .vxl-confirm-actions {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .vxl-confirm-btn {
+      flex: 1;
+      padding: 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s ease;
+      border: none;
+      font-size: 0.95rem;
+    }
+
+    .vxl-btn-cancel {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    .vxl-btn-cancel:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .vxl-btn-submit {
+      background: linear-gradient(135deg, var(--primary, #00f2fe), var(--secondary, #8b5cf6));
+      color: #fff;
+      box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3);
+    }
+
+    .vxl-btn-submit:hover {
+      filter: brightness(1.15);
+      transform: translateY(-2px);
+    }
+
+    /* --- PROGRAM FLOW --- */
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .flow-card {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 20px;
+      padding: 40px 30px;
+      text-align: center;
+      transition: 0.3s;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .flow-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--primary);
+    }
+
+    .flow-num {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(0, 242, 254, 0.1);
+      color: var(--primary);
+      display: grid;
+      place-items: center;
+      font-size: 1.5rem;
+      font-weight: 800;
+      font-family: var(--font-display);
+      margin: 0 auto 20px;
+      border: 1px solid var(--primary);
+    }
+
+    .flow-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+    }
+
+    /* --- FAQ SECTION --- */
+    .faq-container {
+      max-width: 800px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .faq-item {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .faq-item.active {
+      border-color: var(--primary);
+      box-shadow: 0 0 15px rgba(0, 242, 254, 0.15);
+    }
+
+    .faq-question {
+      padding: 20px 25px;
+      margin: 0;
+      cursor: pointer;
+      user-select: none;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: color 0.3s;
+    }
+
+    .faq-question:hover {
+      color: var(--primary);
+    }
+
+    .faq-item.active .faq-question {
+      color: var(--primary);
+    }
+
+    .faq-icon {
+      position: relative;
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .faq-icon::before,
+    .faq-icon::after {
+      content: '';
+      position: absolute;
+      background: currentColor;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: transform 0.3s ease;
+    }
+
+    .faq-icon::before {
+      width: 16px;
+      height: 2px;
+    }
+
+    .faq-icon::after {
+      width: 2px;
+      height: 16px;
+    }
+
+    .faq-item.active .faq-icon::after {
+      transform: translate(-50%, -50%) rotate(90deg);
+      opacity: 0;
+    }
+
+    .faq-answer {
+      padding: 0 25px;
+      margin: 0;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      color: var(--text-dim);
+      line-height: 1.7;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+
+    .faq-item.active .faq-answer {
+      padding: 0 25px 25px;
+      max-height: 500px;
+      opacity: 1;
+    }
+
+    /* --- PORTFOLIO SECTION --- */
+    .portfolio__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .portfolio__item {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      border: 1px solid var(--border-thin);
+    }
+
+    .portfolio__img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100% !important;
+      object-fit: cover;
+      transition: 0.5s;
+    }
+
+    .portfolio__item:hover .portfolio__img {
+      transform: scale(1.1);
+    }
+
+    .portfolio__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(3, 5, 10, 0.95) 0%, rgba(3, 5, 10, 0.2) 60%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 25px;
+    }
+
+    .portfolio__tag {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--primary);
+      margin-bottom: 8px;
+      display: inline-block;
+      background: rgba(0, 242, 254, 0.2);
+      padding: 4px 10px;
+      border-radius: 8px;
+      width: fit-content;
+    }
+
+    .portfolio__title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+
+    .portfolio__metrics {
+      display: flex;
+      gap: 1rem;
+      margin-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 10px;
+    }
+
+    .portfolio__metric {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .portfolio__metric span {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    /* --- VOXSOCIAL & VOXCARD SECTION --- */
+    .promo-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+      margin-bottom: 100px;
+    }
+
+    .promo-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      position: relative;
+    }
+
+    .promo-visual img {
+      width: 100%;
+      height: auto;
+      max-width: 500px;
+      border: none;
+      background: transparent;
+      box-shadow: none;
+      filter: none;
+    }
+
+    .promo-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* --- FINAL FOOTER --- */
+    .footer {
+      position: relative;
+      color: rgba(255, 255, 255, 0.7);
+      padding: 100px 0 50px;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      font-family: var(--font-body);
+      width: 100%;
+      z-index: 10;
+      background: transparent;
+    }
+
+    .footer__inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      padding: 0 5%;
+    }
+
+    .footer__top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+      gap: 30px;
+      padding-bottom: 50px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      width: 100%;
+      text-align: left;
+    }
+
+    .footer-headline {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      line-height: 1.1;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+      color: var(--text-light);
+      text-align: left;
+    }
+
+    .footer__col-title {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: rgba(255, 255, 255, 0.35);
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .footer__links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-align: left;
+    }
+
+    .footer__links a,
+    .footer__links p {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.6);
+      transition: all 0.3s;
+      display: inline-block;
+      text-align: left;
+      text-decoration: none;
+    }
+
+    .footer__links a:hover {
+      color: var(--primary);
+      transform: translateX(6px);
+    }
+
+    .footer__socials {
+      display: flex;
+      gap: 10px;
+      margin-top: 25px;
+      flex-wrap: wrap;
+      max-width: 280px;
+      justify-content: flex-start;
+    }
+
+    .footer__socials a {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-light);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      font-size: 1.05rem;
+      text-decoration: none;
+    }
+
+    .footer__socials a:hover {
+      background: var(--primary);
+      color: #000;
+      border-color: var(--primary);
+      transform: translateY(-5px) scale(1.1);
+      box-shadow: 0 10px 20px rgba(0, 242, 254, 0.3);
+    }
+
+    .text-icon {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 0.75rem;
+      letter-spacing: -0.5px;
+    }
+
+    .icon-fiverr {
+      font-size: 1.2rem;
+      letter-spacing: -1px;
+      margin-top: -3px;
+    }
+
+    .footer__bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 25px;
+      flex-wrap: wrap;
+      gap: 1rem;
+      width: 100%;
+      text-align: left;
+    }
+
+    .footer__copy {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.4);
+      text-align: left;
+    }
+
+    .footer__reach-out {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      flex-wrap: wrap;
+      text-align: left;
+    }
+
+    .footer__reach-out span {
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--text-light);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .footer__reach-out a {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.6);
+      transition: all 0.2s;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+
+    .footer__reach-out a:hover {
+      color: var(--primary);
+    }
+
+    /* ==========================================================================
+           ARABIC (RTL) SUPPORT (DIOPTIMALKAN AGAR TIDAK DOUBLE-REVERSE)
+           ========================================================================== */
+    [dir="rtl"] {
+      text-align: right;
+    }
+
+    [dir="rtl"] .vxl-nav-links {
+      flex-direction: row-reverse;
+    }
+
+    [dir="rtl"] .vxl-nav-inner {
+      flex-direction: row-reverse;
+    }
+
+    [dir="rtl"] .vxl-logo {
+      flex-direction: row-reverse;
+    }
+
+    [dir="rtl"] .hero-grid-split {
+      direction: rtl;
+    }
+
+    [dir="rtl"] .hero-content-split {
+      text-align: right;
+    }
+
+    [dir="rtl"] .hero-badge {
+      flex-direction: row-reverse;
+    }
+
+    [dir="rtl"] .btn-glow {
+      flex-direction: row-reverse;
+    }
+
+    [dir="rtl"] .vxl-mega-menu {
+      left: 0;
+      right: auto;
+      text-align: right;
+    }
+
+    [dir="rtl"] .footer__top {
+      text-align: right;
+      direction: rtl;
+    }
+
+    [dir="rtl"] .footer__col-title,
+    [dir="rtl"] .footer-headline,
+    [dir="rtl"] .footer__copy {
+      text-align: right;
+    }
+
+    [dir="rtl"] .footer__reach-out {
+      flex-direction: row-reverse;
+    }
+
+    [dir="rtl"] .rule-title {
+      flex-direction: row-reverse;
+    }
+
+    [dir="rtl"] .faq-question {
+      flex-direction: row-reverse;
+      text-align: right;
+    }
+
+    [dir="rtl"] .flow-grid {
+      direction: rtl;
+    }
+
+    [dir="rtl"] .portfolio__grid {
+      direction: rtl;
+      text-align: right;
+    }
+
+    [dir="rtl"] .promo-split {
+      direction: rtl;
+      text-align: right;
+    }
+
+    [dir="rtl"] .p-details {
+      text-align: right;
+    }
+
+    /* =========================================
+         RESPONSIVE MEDIA QUERIES
+         ========================================= */
+    @media (max-width: 1024px) {
+      .vxl-nav-links {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .vxl-nav {
+        width: 95%;
+        padding: 12px 20px;
+        border-radius: 12px;
+      }
+
+      .vxl-nav.vxl-scrolled {
+        padding: 10px 20px;
+      }
+
+      /* MENGHILANGKAN TOMBOL REGISTER DI NAVBAR SAAT MOBILE */
+      .nav-register-btn {
+        display: none !important;
+      }
+
+      .hero-grid-split {
+        flex-direction: column;
+        text-align: center;
+        gap: 40px;
+      }
+
+      .hero-btn-container {
+        justify-content: center;
+      }
+
+      [dir="rtl"] .hero-content-split {
+        text-align: center;
+      }
+
+      .hero-content-split {
+        width: 100%;
+      }
+
+      /* MASCOT DI ATAS TEKS SAAT MOBILE */
+      .hero-visual-split {
+        order: -1;
+        margin-bottom: 20px;
+      }
+
+      .giveaway-container {
+        grid-template-columns: 1fr;
+      }
+
+      .wheel-container {
+        width: 450px;
+        height: 450px;
+        margin: 0 auto;
+      }
+
+      .flow-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .portfolio__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .promo-split {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 30px;
+      }
+
+      .promo-visual {
+        order: 1;
+      }
+
+      .promo-content {
+        order: 2;
+      }
+
+      [dir="rtl"] .promo-split {
+        text-align: center;
+      }
+
+      .footer__top {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 40px !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+
+      .countdown-title {
+        font-size: 0.7rem;
+      }
+
+      .section-pad {
+        padding: 60px 0;
+      }
+
+      .hero {
+        padding-top: 140px;
+        padding-bottom: 40px;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.4rem, 8vw, 3.2rem);
+        margin-bottom: 15px;
+      }
+
+      .hero p {
+        font-size: 1rem;
+        margin-bottom: 25px;
+      }
+
+      .wheel-container {
+        width: 340px;
+        height: 340px;
+      }
+
+      .mascot-hero-img {
+        max-width: 300px;
+      }
+
+      .flow-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .portfolio__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer {
+        padding: 60px 0 30px;
+        text-align: left;
+      }
+
+      .footer__top {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 35px 20px !important;
+        text-align: left;
+      }
+
+      .footer__top>div:first-child {
+        grid-column: 1 / -1;
+      }
+
+      .footer-headline {
+        font-size: 2.5rem;
+        text-align: left;
+      }
+
+      .footer__socials {
+        justify-content: flex-start;
+        gap: 10px;
+        margin: 20px 0;
+      }
+
+      .footer__bottom {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 15px;
+        text-align: left;
+      }
+
+      .footer__reach-out {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        justify-content: flex-start;
+      }
+
+      .grid-bg {
+        opacity: 0.8 !important;
+        background-size: 40px 40px !important;
+      }
+
+      .bg-orb {
+        opacity: 0.35 !important;
+        filter: blur(70px) !important;
+      }
+
+      [dir="rtl"] .footer__top {
+        text-align: right;
+      }
+
+      [dir="rtl"] .footer-headline {
+        text-align: right;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- BACKGROUND MESH & GRID -->
+  <div class="vxl-bg-container">
+    <div class="grid-bg"></div>
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav id="vxl-nav" class="vxl-nav">
+    <div class="container vxl-nav-inner">
+      <a href="https://voxlumedia.com/" class="vxl-logo">
+        <img src="https://voxlumedia.com/wp-content/uploads/2026/07/logo-voxlumedia-cut.png" alt="Voxlumedia Logo">
+        <span>VOXLUMEDIA&trade;</span>
+      </a>
+
+      <div class="vxl-nav-links">
+        <div class="vxl-nav-item-has-menu">
+          <a href="#" class="vxl-nav-link" style="color:var(--text-light) !important;"><i class="fa-solid fa-globe"
+              style="margin-right: 5px;"></i> <span data-i18n="nav_lang">Lang</span> <i class="fa-solid fa-chevron-down"
+              style="font-size: 10px; margin-left: 5px;"></i></a>
+          <div class="vxl-mega-menu dropdown-small">
+            <a href="#" onclick="switchLang('en', event)">English (EN)</a>
+            <a href="#" onclick="switchLang('ar', event)" style="font-family: Arial;">العربية (AR)</a>
+          </div>
+        </div>
+
+        <div class="vxl-nav-item-has-menu">
+          <a href="https://voxlumedia.com/services/" class="vxl-nav-link"><span data-i18n="nav_arch">Architecture</span>
+            <i class="fa-solid fa-chevron-down" style="font-size: 10px; margin-left: 5px;"></i></a>
+          <div class="vxl-mega-menu">
+            <div class="vxl-mega-menu-grid">
+              <div class="vxl-mega-menu-col">
+                <h5 data-i18n="arch_eng">Engineering & Tech</h5>
+                <a href="https://voxlumedia.com/services/web-development/" data-i18n="arch_1">Website Development</a>
+                <a href="https://voxlumedia.com/services/web-mobile-app-development/" data-i18n="arch_2">Web & Mobile
+                  Apps</a>
+                <a href="https://voxlumedia.com/services/full-stack-development/" data-i18n="arch_3">Full-Stack
+                  Development</a>
+                <a href="https://voxlumedia.com/services/dedicated-team-development/" data-i18n="arch_4">Dedicated
+                  Team</a>
+              </div>
+              <div class="vxl-mega-menu-col">
+                <h5 data-i18n="arch_ai">AI & Automation</h5>
+                <a href="https://voxlumedia.com/services/ai-virtual-assistant/" data-i18n="arch_5">AI Virtual
+                  Assistant</a>
+                <a href="https://voxlumedia.com/services/crm-expert/" data-i18n="arch_6">CRM Expert</a>
+                <a href="https://voxlumedia.com/services/crm-software-solutions/" data-i18n="arch_7">CRM Software
+                  Solutions</a>
+                <a href="https://voxlumedia.com/services/email-marketing/" data-i18n="arch_8">Email Marketing</a>
+              </div>
+              <div class="vxl-mega-menu-col">
+                <h5 data-i18n="arch_mark">Marketing & Creative</h5>
+                <a href="https://voxlumedia.com/services/seo-services/" data-i18n="arch_9">SEO Services</a>
+                <a href="https://voxlumedia.com/services/digital-marketing/" data-i18n="arch_10">Digital Marketing</a>
+                <a href="https://voxlumedia.com/services/social-media-marketing/" data-i18n="arch_11">Social Media
+                  Marketing</a>
+                <a href="https://voxlumedia.com/services/content-writing/" data-i18n="arch_12">Content Writing</a>
+                <a href="https://voxlumedia.com/services/graphic-design/" data-i18n="arch_13">Graphic Design</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="vxl-nav-item-has-menu">
+          <a href="#solutions" class="vxl-nav-link"><span data-i18n="nav_sol">Vox Solutions</span> <i
+              class="fa-solid fa-chevron-down" style="font-size: 10px; margin-left: 5px;"></i></a>
+          <div class="vxl-mega-menu" style="width: 500px;">
+            <div class="vxl-mega-menu-grid" style="grid-template-columns: repeat(2, 1fr);">
+              <div class="vxl-mega-menu-col">
+                <h5 data-i18n="sol_ind">Industry Suites</h5>
+                <a href="https://voxlumedia.com/vox-hospitality" data-i18n="sol_1">VoxHospitality</a>
+                <a href="https://voxlumedia.com/vox-wellness/" data-i18n="sol_2">VoxWellness</a>
+                <a href="https://voxlumedia.com/vox-pro/" data-i18n="sol_3">VoxPro</a>
+              </div>
+              <div class="vxl-mega-menu-col">
+                <h5 data-i18n="sol_more">More Solutions</h5>
+                <a href="https://voxlumedia.com/voxdrive/" data-i18n="sol_4">VoxDrive</a>
+                <a href="https://voxlumedia.com/vox-gov/" data-i18n="sol_5">VoxGov</a>
+                <a href="https://voxcard.voxlumedia.com/" style="color: var(--primary);" data-i18n="sol_6">VoxCard
+                  (NFC)</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a href="#giveaway" class="vxl-nav-link text-gradient" data-i18n="nav_spin">Live Spin</a>
+        <a href="#winners-wall" class="vxl-nav-link" data-i18n="nav_win">Winners</a>
+      </div>
+
+      <!-- BUTTON INI HILANG DI MOBILE -->
+      <a href="#register-card" class="btn-glow btn-solid-primary nav-register-btn"
+        style="padding: 10px 24px; font-size: 0.8rem;" data-i18n="nav_reg">Register Now</a>
+
+      <button class="hamburger" id="hamburger-btn" aria-label="Toggle Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU OVERLAY -->
+  <div class="mobile-menu-overlay" id="mobile-menu">
+    <div class="mobile-nav-list">
+      <!-- Language Toggle -->
+      <div class="mobile-nav-item">
+        <div class="mobile-nav-link mobile-dropdown-toggle"><span data-i18n="nav_lang">Language</span> <i
+            class="fa-solid fa-chevron-down" style="font-size: 16px;"></i></div>
+        <div class="mobile-dropdown-menu">
+          <div class="mobile-dropdown-group">
+            <a href="#" onclick="switchLang('en', event)" class="mobile-link-item">English (EN)</a>
+            <a href="#" onclick="switchLang('ar', event)" class="mobile-link-item" style="font-family: Arial;">العربية
+              (AR)</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Architecture -->
+      <div class="mobile-nav-item">
+        <div class="mobile-nav-link mobile-dropdown-toggle"><span data-i18n="nav_arch">Architecture</span> <i
+            class="fa-solid fa-chevron-down" style="font-size: 16px;"></i></div>
+        <div class="mobile-dropdown-menu">
+          <div class="mobile-dropdown-group">
+            <h5 data-i18n="arch_eng">Engineering & Tech</h5>
+            <a href="https://voxlumedia.com/services/web-development/" class="mobile-link-item"
+              data-i18n="arch_1">Website Development</a>
+            <a href="https://voxlumedia.com/services/web-mobile-app-development/" class="mobile-link-item"
+              data-i18n="arch_2">Web & Mobile Apps</a>
+            <a href="https://voxlumedia.com/services/full-stack-development/" class="mobile-link-item"
+              data-i18n="arch_3">Full-Stack Development</a>
+            <a href="https://voxlumedia.com/services/dedicated-team-development/" class="mobile-link-item"
+              data-i18n="arch_4">Dedicated Team</a>
+          </div>
+          <div class="mobile-dropdown-group">
+            <h5 data-i18n="arch_ai">AI & Automation</h5>
+            <a href="https://voxlumedia.com/services/ai-virtual-assistant/" class="mobile-link-item"
+              data-i18n="arch_5">AI Virtual Assistant</a>
+            <a href="https://voxlumedia.com/services/crm-expert/" class="mobile-link-item" data-i18n="arch_6">CRM
+              Expert</a>
+            <a href="https://voxlumedia.com/services/crm-software-solutions/" class="mobile-link-item"
+              data-i18n="arch_7">CRM Software Solutions</a>
+            <a href="https://voxlumedia.com/services/email-marketing/" class="mobile-link-item" data-i18n="arch_8">Email
+              Marketing</a>
+          </div>
+          <div class="mobile-dropdown-group">
+            <h5 data-i18n="arch_mark">Marketing & Creative</h5>
+            <a href="https://voxlumedia.com/services/seo-services/" class="mobile-link-item" data-i18n="arch_9">SEO
+              Services</a>
+            <a href="https://voxlumedia.com/services/digital-marketing/" class="mobile-link-item"
+              data-i18n="arch_10">Digital Marketing</a>
+            <a href="https://voxlumedia.com/services/social-media-marketing/" class="mobile-link-item"
+              data-i18n="arch_11">Social Media Marketing</a>
+            <a href="https://voxlumedia.com/services/content-writing/" class="mobile-link-item"
+              data-i18n="arch_12">Content Writing</a>
+            <a href="https://voxlumedia.com/services/graphic-design/" class="mobile-link-item"
+              data-i18n="arch_13">Graphic Design</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vox Solutions -->
+      <div class="mobile-nav-item">
+        <div class="mobile-nav-link mobile-dropdown-toggle"><span data-i18n="nav_sol">Vox Solutions</span> <i
+            class="fa-solid fa-chevron-down" style="font-size: 16px;"></i></div>
+        <div class="mobile-dropdown-menu">
+          <div class="mobile-dropdown-group">
+            <h5 data-i18n="sol_ind">Industry Suites</h5>
+            <a href="https://voxlumedia.com/vox-hospitality" class="mobile-link-item"
+              data-i18n="sol_1">VoxHospitality</a>
+            <a href="https://voxlumedia.com/vox-wellness/" class="mobile-link-item" data-i18n="sol_2">VoxWellness</a>
+            <a href="https://voxlumedia.com/vox-pro/" class="mobile-link-item" data-i18n="sol_3">VoxPro</a>
+          </div>
+          <div class="mobile-dropdown-group">
+            <h5 data-i18n="sol_more">More Solutions</h5>
+            <a href="https://voxlumedia.com/voxdrive/" class="mobile-link-item" data-i18n="sol_4">VoxDrive</a>
+            <a href="https://voxlumedia.com/vox-gov/" class="mobile-link-item" data-i18n="sol_5">VoxGov</a>
+            <a href="https://voxcard.voxlumedia.com/" class="mobile-link-item" style="color: var(--primary);"
+              data-i18n="sol_6">VoxCard (NFC)</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- General Links -->
+      <a href="#giveaway" class="mobile-nav-link mobile-link-item" style="padding-top: 5px;" data-i18n="nav_spin">Live
+        Spin</a>
+      <a href="#winners-wall" class="mobile-nav-link mobile-link-item" data-i18n="nav_win">Winners Wall</a>
+    </div>
+
+    <!-- BUTTON REGISTRATION PINDAH KE DALAM SINI UNTUK MOBILE -->
+    <a href="#register-card" class="btn-glow mobile-menu-btn mobile-link-item" data-i18n="nav_reg">Register Now</a>
+  </div>
+
+  <main>
+    <!-- HERO SECTION WITH MASCOT -->
+    <section class="hero" id="hero">
+      <div class="container gs-reveal">
+        <div class="hero-grid-split">
+          <div class="hero-content-split">
+            <div class="hero-badge" data-i18n="hero_badge"><i class="fa-solid fa-bolt"></i> Elite Weekly Giveaway by
+              Voxlumedia</div>
+            <h1 data-i18n="hero_title">Elevate Your Brand <br /><span class="text-gradient">For Free.</span></h1>
+            <p data-i18n="hero_desc">Join our weekly VoxSpin to win premium, agency-quality social media design assets
+              for your business. Zero cost, pure value, drawn every 7 days automatically.</p>
+            <div class="hero-btn-container">
+              <a href="#giveaway" class="btn-glow" data-i18n="hero_btn">Join This Week's Spin <i
+                  class="fa-solid fa-arrow-right" style="margin-left: 5px;"></i></a>
+            </div>
+          </div>
+
+          <div class="hero-visual-split">
+            <img src="images/maskcotryanhero.png" alt="Mascot Ryan" class="mascot-hero-img"
+              onerror="this.src='https://via.placeholder.com/400x500?text=Mascot+Ryan'" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GIVEAWAY SPIN SECTION -->
+    <section class="giveaway-section" id="giveaway">
+      <div class="giveaway-container container gs-reveal">
+
+        <!-- LEFT: LARGE PREMIUM SPIN WHEEL & WEEKLY COUNTDOWN -->
+        <div class="glass-card" style="align-items: center; text-align: center;">
+          <h2 style="font-size: 2.2rem; margin-bottom: 8px;" data-i18n="spin_title">VoxSpin <span
+              class="text-gradient">Live Wheel</span></h2>
+          <p style="margin-bottom: 20px; font-size: 0.95rem; color: var(--text-dim);" data-i18n="spin_desc">Transparent
+            weekly automated draw for active businesses.</p>
+
+          <!-- WEEKLY COUNTDOWN WIDGET -->
+          <div class="weekly-countdown-widget" style="width: 100%;">
+            <div class="countdown-title">
+              <i class="fa-solid fa-clock-rotate-left"></i> <span data-i18n="cd_title">Next Weekly Automated Draw
+                In:</span>
+            </div>
+            <div class="countdown-timers-grid">
+              <div class="time-box">
+                <div class="time-val" id="cd-days">06</div>
+                <div class="time-lbl" data-i18n="lbl_days">Days</div>
+              </div>
+              <div class="time-box">
+                <div class="time-val" id="cd-hours">23</div>
+                <div class="time-lbl" data-i18n="lbl_hours">Hours</div>
+              </div>
+              <div class="time-box">
+                <div class="time-val" id="cd-mins">59</div>
+                <div class="time-lbl" data-i18n="lbl_mins">Mins</div>
+              </div>
+              <div class="time-box">
+                <div class="time-val" id="cd-secs">45</div>
+                <div class="time-lbl" data-i18n="lbl_secs">Secs</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Professional Large Wheel Area -->
+          <div class="wheel-area-wrapper">
+            <div class="wheel-container">
+              <div class="wheel-pointer"></div>
+              <canvas id="wheel-canvas" width="650" height="650"></canvas>
+              <div class="wheel-center-hub" id="wheel-spin-trigger">SPIN</div>
+            </div>
+          </div>
+
+          <!-- SPIN BUTTON (No data-i18n to prevent translator overwrite) -->
+          <button class="btn-glow" id="spin-btn" style="width: 100%; max-width: 400px;" disabled>
+            <i class="fa-solid fa-lock"></i> Weekly Draw Locked
+          </button>
+
+          <div class="winner-banner" id="winner-banner">
+            <h3 id="winner-name">Congratulations Selected Brand</h3>
+            <p id="winner-meta" data-i18n="win_meta">Our team will contact you soon.</p>
+          </div>
+        </div>
+
+        <!-- RIGHT: REGISTRATION FORM WITH MAX 20 LIMIT -->
+        <div class="glass-card" id="register-card">
+          <h2 style="font-size: 1.8rem; margin-bottom: 8px;" data-i18n="reg_title">Register Your Business</h2>
+
+          <!-- CLEANED UP PROGRAM RULES & CAPACITY -->
+          <div class="registration-rule-box">
+            <div class="rule-title">
+              <i class="fa-solid fa-circle-info"></i> <span data-i18n="reg_rule_title">Program Rules & Capacity</span>
+            </div>
+            <div class="rule-desc" data-i18n="reg_rule_desc">
+              Maximum limit is <strong>20 businesses per week</strong>. Unselected businesses will automatically
+              <strong>carry over to the next week's draw</strong>.<br><br>
+              <span class="mandatory-ig-highlight">MANDATORY:</span> You must follow <strong
+                style="color:var(--primary);">@voxlumedia</strong> on Instagram to qualify for selection!
+            </div>
+          </div>
+
+          <form id="entry-form" onsubmit="addEntry(event)">
+            <input type="text" id="biz-name" class="form-input" data-i18n-placeholder="placeholder_biz_name"
+              placeholder="Business Name" required />
+            <input type="email" id="biz-email" class="form-input" data-i18n-placeholder="placeholder_biz_email"
+              placeholder="Business Email (Required)" required />
+            <input type="tel" id="biz-phone" class="form-input" data-i18n-placeholder="placeholder_biz_phone"
+              placeholder="WhatsApp / Phone Number" required />
+
+            <!-- NEW: Business Website -->
+            <input type="url" id="biz-website" class="form-input" placeholder="Business Website" />
+
+            <select id="biz-niche" class="form-input" required>
+              <option value="" disabled selected data-i18n="placeholder_niche">Select Industry Niche</option>
+              <option value="Food & Beverage">Food & Beverage</option>
+              <option value="Retail & Fashion">Retail & Fashion</option>
+              <option value="Tech & Digital">Tech & Digital</option>
+              <option value="Services & Others">Services & Others</option>
+            </select>
+
+            <!-- NEW: City/Physical Address -->
+            <input type="text" id="biz-address" class="form-input" placeholder="City/Physical Address" />
+
+            <input type="text" id="biz-ig" class="form-input" data-i18n-placeholder="placeholder_ig"
+              placeholder="Instagram Username (Required for verification)" required />
+            <input type="text" id="biz-tiktok" class="form-input" data-i18n-placeholder="placeholder_tiktok"
+              placeholder="TikTok Username (Optional)" />
+            <input type="text" id="biz-fb" class="form-input" data-i18n-placeholder="placeholder_fb"
+              placeholder="Facebook Page (Optional)" />
+
+            <button type="submit" class="btn-glow" id="submit-btn" style="width: 100%; margin-top: 10px;"
+              data-i18n="reg_btn">+ Enter Giveaway Pool</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW VOXSPIN WORKS (PROGRAM FLOW) -->
+    <section class="section-pad" id="how-it-works"
+      style="background: rgba(255,255,255,0.02); border-top: 1px solid var(--border-thin);">
+      <div class="container gs-reveal">
+        <div class="section-header">
+          <span class="section-label" data-i18n="flow_label">Program Flow</span>
+          <h2 data-i18n="flow_title">How VoxSpin Works</h2>
+          <p data-i18n="flow_desc">Three simple steps to win professional visual assets for your brand.</p>
+        </div>
+
+        <div class="flow-grid">
+          <div class="flow-card">
+            <div class="flow-num">1</div>
+            <h3 data-i18n="step1_title">Free Registration</h3>
+            <p style="color:var(--text-dim);" data-i18n="step1_desc">Enter your business details into the entry form. No
+              hidden fees required.</p>
+          </div>
+          <div class="flow-card" style="border-color:var(--secondary);">
+            <div class="flow-num"
+              style="color:var(--secondary); border-color:var(--secondary); background:rgba(139,92,246,0.1);">2</div>
+            <h3 data-i18n="step2_title">Wait for the Spin</h3>
+            <p style="color:var(--text-dim);" data-i18n="step2_desc">Every Friday, our system transparently scrambles
+              and selects one active business.</p>
+          </div>
+          <div class="flow-card" style="border-color:var(--accent);">
+            <div class="flow-num"
+              style="color:var(--accent); border-color:var(--accent); background:rgba(245,158,11,0.1);">3</div>
+            <h3 data-i18n="step3_title">Claim Your Prize</h3>
+            <p style="color:var(--text-dim);" data-i18n="step3_desc">If selected, our creative team will contact you
+              directly to deliver your free asset.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PARTICIPANTS LIST (NEW 3D SOLID CARDS) -->
+    <section class="section-pad" id="participants">
+      <div class="container gs-reveal" style="text-align: center;">
+        <h2 style="font-size: 2.5rem; margin-bottom: 10px;" data-i18n="rost_title">Live <span
+            class="text-gradient">Roster</span></h2>
+        <p style="margin-bottom: 40px; color: var(--text-dim);" data-i18n="rost_desc">Active businesses queued for this
+          week's 7-day draw cycle (Max 20 slots).</p>
+
+        <div class="participant-board">
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px;">
+            <input type="text" id="search-input" class="form-input" data-i18n-placeholder="placeholder_search"
+              placeholder="Search participant..." style="max-width: 320px; margin: 0; background: #0f172a;">
+            <div
+              style="color: #fff; font-weight: 700; background: rgba(0, 242, 254, 0.1); padding: 12px 24px; border-radius: 12px; border: 1px solid rgba(0, 242, 254, 0.3);">
+              <span data-i18n="pool_cap">Pool Capacity:</span> <span id="total-count-badge"
+                style="color: var(--primary);">0</span> / 20 <span data-i18n="slots">Slots</span>
+            </div>
+          </div>
+          <div class="participant-grid" id="participant-grid">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WINNERS HALL OF FAME -->
+    <section class="section-pad" id="winners-wall" style="border-top: 1px solid var(--border-thin);">
+      <div class="container gs-reveal" style="text-align: center;">
+        <h2 style="font-size: 2.5rem; margin-bottom: 10px;" data-i18n="fame_title">Hall of <span
+            class="text-gold">Fame</span></h2>
+        <p style="margin-bottom: 40px; color: var(--text-dim);" data-i18n="fame_desc">Brands that successfully won our
+          weekly free design asset drop.</p>
+
+        <div class="participant-board">
+          <div class="participant-grid" id="winners-grid">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ ACCORDION -->
+    <section class="section-pad" id="faq"
+      style="background: rgba(255,255,255,0.02); border-top: 1px solid var(--border-thin);">
+      <div class="container gs-reveal">
+        <div class="section-header">
+          <span class="section-label" data-i18n="faq_label">Technical Details</span>
+          <h2 data-i18n="faq_title">Frequently Asked Questions</h2>
+        </div>
+
+        <div class="faq-container">
+          <div class="faq-item">
+            <h4 class="faq-question" data-i18n="q1">When does the live draw happen? <span class="faq-icon"></span></h4>
+            <p class="faq-answer" data-i18n="a1">The live spin is conducted every Friday. Recordings are posted directly
+              on Voxlumedia channels.</p>
+          </div>
+          <div class="faq-item">
+            <h4 class="faq-question" data-i18n="q2">How will I know if my business wins? <span class="faq-icon"></span>
+            </h4>
+            <p class="faq-answer" data-i18n="a2">Our official team will contact you via WhatsApp, email, or social media
+              handles provided during entry.</p>
+          </div>
+          <div class="faq-item">
+            <h4 class="faq-question" data-i18n="q3">Do I need to re-register every week? <span class="faq-icon"></span>
+            </h4>
+            <p class="faq-answer" data-i18n="a3">No, your business stays securely in our active drawing pool permanently
+              until selected as a winner.</p>
+          </div>
+          <div class="faq-item">
+            <h4 class="faq-question" data-i18n="q4">What exactly is included in the prize? <span
+                class="faq-icon"></span></h4>
+            <p class="faq-answer" data-i18n="a4">One professional agency-grade social media content asset fully tailored
+              for your brand identity.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PORTFOLIO SECTION -->
+    <section class="section-pad" id="portfolio">
+      <div class="container gs-reveal">
+        <div class="section-header">
+          <span class="section-label" data-i18n="port_label">Real Results</span>
+          <h2 data-i18n="port_title">A Taste of Our Success</h2>
+          <p data-i18n="port_desc">See sample agency-quality assets you can win entirely for free.</p>
+        </div>
+
+        <div class="portfolio__grid">
+          <div class="portfolio__item">
+            <img src="https://voxlumedia.com/wp-content/uploads/2026/06/global-bistro-cover.png"
+              alt="Fine Dining Client" class="portfolio__img"
+              onerror="this.src='https://via.placeholder.com/600x450?text=Portfolio+1'">
+            <div class="portfolio__overlay">
+              <span class="portfolio__tag" data-i18n="port1_tag">Social Media Content</span>
+              <h3 class="portfolio__title" data-i18n="port1_title">High-Converting Carousel Post</h3>
+              <div class="portfolio__metrics">
+                <div class="portfolio__metric"><span data-i18n="port1_metric">Engagement</span><span>+ 145%</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="portfolio__item">
+            <img src="https://voxlumedia.com/wp-content/uploads/2025/11/16.jpg" alt="Cafe Social Growth Client"
+              class="portfolio__img" onerror="this.src='https://via.placeholder.com/600x450?text=Portfolio+2'">
+            <div class="portfolio__overlay">
+              <span class="portfolio__tag" data-i18n="port2_tag">Brand Aesthetics</span>
+              <h3 class="portfolio__title" data-i18n="port2_title">Premium Story Design Kit</h3>
+              <div class="portfolio__metrics">
+                <div class="portfolio__metric"><span data-i18n="port2_metric">Social Reach</span><span>+ 320%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="portfolio__item">
+            <img src="https://voxlumedia.com/wp-content/uploads/2026/06/ddsda_09.png" alt="Local Concept Launch"
+              class="portfolio__img" onerror="this.src='https://via.placeholder.com/600x450?text=Portfolio+3'">
+            <div class="portfolio__overlay">
+              <span class="portfolio__tag" data-i18n="port3_tag">Ad Creatives</span>
+              <h3 class="portfolio__title" data-i18n="port3_title">Performance Marketing Banners</h3>
+              <div class="portfolio__metrics">
+                <div class="portfolio__metric"><span data-i18n="port3_metric">Click-Through</span><span>+ 210%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="text-align: center; margin-top: 50px;">
+          <a href="https://voxlumedia.com/voxlumedia-portfolio-page/" target="_blank" class="btn-glow btn-solid-primary"
+            style="padding: 14px 32px; font-size: 1rem;">
+            View Our Full Portfolio <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- VOXSOCIAL & VOXCARD PROMOS -->
+    <section class="section-pad" style="border-top: 1px solid var(--border-thin);">
+      <div class="container gs-reveal">
+
+        <!-- VoxSocial Promo -->
+        <div class="promo-split">
+          <div class="promo-visual">
+            <img src="https://voxlumedia.com/wp-content/uploads/2026/07/Screenshot-2026-07-13-222002.png"
+              alt="Vox Social Score AI Audit Tool"
+              onerror="this.src='https://via.placeholder.com/600x400?text=VoxSocial+Preview'">
+          </div>
+          <div class="promo-content">
+            <span class="section-label" data-i18n="vs_label">AI-Powered Audit Tool</span>
+            <h2 style="font-size: clamp(2rem, 4vw, 3.2rem); margin-bottom: 1rem;">VOX SOCIAL<br><span
+                style="color:var(--accent);">SCORE</span></h2>
+            <p style="color:var(--text-dim); margin-bottom: 2rem; font-size: 1.05rem;" data-i18n="vs_desc">Get an
+              instant business evaluation. Learn how easily potential customers find, trust, and purchase products from
+              your social channels.</p>
+            <a href="https://voxsocial.voxlumedia.com/" target="_blank" class="btn-glow btn-orange"
+              data-i18n="vs_btn">Start Free Audit &rarr;</a>
+          </div>
+        </div>
+
+        <!-- VoxCard Promo -->
+        <div class="promo-split">
+          <div class="promo-content">
+            <span class="section-label"
+              style="color:var(--secondary); border-color:var(--secondary); background:rgba(139,92,246,0.1);"
+              data-i18n="vc_label">Smart Networking</span>
+            <h2 style="font-size: clamp(2rem, 4vw, 3.2rem); margin-bottom: 1rem;">VOX<span
+                style="color:var(--secondary);">CARD</span></h2>
+            <p style="color:var(--text-dim); margin-bottom: 2rem; font-size: 1.05rem;" data-i18n="vc_desc">Upgrade your
+              networking game with the ultimate digital business card. Share your contact info, portfolios, and links
+              with a single tap.</p>
+            <a href="https://voxcard.voxlumedia.com/" target="_blank" class="btn-glow"
+              style="color:var(--secondary)!important; border-color:var(--secondary);" data-i18n="vc_btn">Get Your
+              VoxCard &rarr;</a>
+          </div>
+          <div class="promo-visual">
+            <img src="https://voxcard.voxlumedia.com/wp-content/uploads/2026/05/VoxMaskot-scaled.webp"
+              alt="VoxCard Mascot" onerror="this.src='https://via.placeholder.com/350x500?text=VoxCard+Mascot'">
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- FINAL FOOTER -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__top">
+        <div>
+          <h2 class="footer-headline" data-i18n="ft_ready">Ready to <br><span class="text-gradient">Evolve</span></h2>
+          <a href="https://voxlumedia.com/home/book-meeting/" class="btn-glow btn-solid-primary"
+            style="background: var(--bg-dark); padding: 10px 24px; font-size: 0.95rem;">
+            <span data-i18n="ft_init">Initialize Link</span> <i class="fa-solid fa-arrow-right"></i>
+          </a>
+
+          <div class="footer__socials">
+            <a href="https://www.facebook.com/voxlumedia" target="_blank" aria-label="Facebook"><i
+                class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/voxlumedia/" target="_blank" aria-label="Instagram"><i
+                class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@voxlumedia" target="_blank" aria-label="TikTok"><i
+                class="fa-brands fa-tiktok"></i></a>
+            <a href="https://www.threads.net/@voxlumedia" target="_blank" aria-label="Threads"><i
+                class="fa-brands fa-threads"></i></a>
+            <a href="https://www.youtube.com/@Voxlumedia" target="_blank" aria-label="YouTube"><i
+                class="fa-brands fa-youtube"></i></a>
+            <a href="https://www.linkedin.com/company/voxlumedia" target="_blank" aria-label="LinkedIn"><i
+                class="fa-brands fa-linkedin-in"></i></a>
+            <a href="https://www.behance.net/voxlumedia" target="_blank" aria-label="Behance"><i
+                class="fa-brands fa-behance"></i></a>
+            <a href="https://www.upwork.com/agencies/voxlumedia" target="_blank" aria-label="Upwork"><span
+                class="text-icon">Up</span></a>
+            <a href="https://www.fiverr.com/voxlumedia" target="_blank" aria-label="Fiverr"><span
+                class="text-icon icon-fiverr">fi</span></a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer__col-title" data-i18n="ft_net">The Vox Network</h4>
+          <div class="footer__links">
+            <a href="https://voxecom.voxlumedia.com/" data-i18n="ft_net_1">VoxEcom</a>
+            <a href="https://voxhome.voxlumedia.com/" data-i18n="ft_net_2">VoxHome</a>
+            <a href="https://voxgov.voxlumedia.com/" data-i18n="ft_net_3">VoxGov</a>
+            <a href="https://voxpro.voxlumedia.com/" data-i18n="ft_net_4">VoxPro</a>
+            <a href="https://voxcard.voxlumedia.com/" data-i18n="ft_net_5">VoxCard</a>
+            <a href="https://voxsocial.voxlumedia.com/" data-i18n="ft_net_6">VoxSocial Score</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer__col-title" data-i18n="ft_arch">Architecture</h4>
+          <div class="footer__links">
+            <a href="https://voxlumedia.com/services/ai-virtual-assistant/" data-i18n="ft_arch_1">AI Integration</a>
+            <a href="https://voxlumedia.com/services/web-development/" data-i18n="ft_arch_2">Web Engineering</a>
+            <a href="https://voxlumedia.com/services/seo-services/" data-i18n="ft_arch_3">Search Domination</a>
+            <a href="https://voxlumedia.com/services/crm-expert/" data-i18n="ft_arch_4">CRM Workflows</a>
+            <a href="https://voxlumedia.com/services/graphic-design/" data-i18n="ft_arch_5">Creative & Design</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer__col-title" data-i18n="ft_sol">Solutions</h4>
+          <div class="footer__links">
+            <a href="https://voxlumedia.com/services/seo-services/" data-i18n="ft_sol_1">VoxSEO Local</a>
+            <a href="https://voxlumedia.com/services/ai-virtual-assistant/" data-i18n="ft_sol_2">VoxVoice AI</a>
+            <a href="https://voxlumedia.com/services/social-media-marketing/" data-i18n="ft_sol_3">Social Media</a>
+            <a href="https://voxlumedia.com/services/review-recovery/" data-i18n="ft_sol_4">Review Recovery</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer__col-title" data-i18n="ft_res">Resources</h4>
+          <div class="footer__links" style="margin-bottom: 25px;">
+            <a href="https://voxlumedia.com/voxlumedia-portfolio-page/" data-i18n="ft_port">Our Portfolio</a>
+            <a href="https://voxlumedia.com/free-audit/" data-i18n="ft_audit">Free Audit</a>
+            <a href="https://voxlumedia.com/pricing/" data-i18n="ft_price">Pricing Plans</a>
+          </div>
+          <h4 class="footer__col-title" data-i18n="ft_cont">Contact</h4>
+          <div class="footer__links">
+            <a href="mailto:sales@voxlumedia.com">sales@voxlumedia.com</a>
+            <a href="tel:+15715260060">+1 571-526-0060</a>
+            <p style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.4); margin-top: 0.5rem; font-style: italic;"
+              data-i18n="ft_tag">Less Stress. More Results.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <div class="footer__copy" data-i18n="ft_copy">Copyright © 2026 Voxlumedia | Digital Agency for Branding, Design
+          & Marketing</div>
+        <div class="footer__reach-out">
+          <span data-i18n="ft_reach">Reach Out</span>
+          <a href="mailto:sales@voxlumedia.com">sales@voxlumedia.com</a>
+          <a href="tel:+15715260060">+1 571-526-0060</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    /* =========================================
+       CUSTOM TOAST & CONFIRM ENGINE
+       ========================================= */
+    function showToast(message, type = 'info') {
+      let container = document.getElementById('vxl-toast-container');
+      if (!container) {
+        container = document.createElement('div');
+        container.id = 'vxl-toast-container';
+        document.body.appendChild(container);
+      }
+
+      const toast = document.createElement('div');
+      toast.className = `vxl-toast vxl-toast-${type}`;
+
+      let icon = 'fa-circle-info';
+      if (type === 'success') icon = 'fa-circle-check';
+      if (type === 'error') icon = 'fa-triangle-exclamation';
+      if (type === 'warning') icon = 'fa-bell';
+
+      toast.innerHTML = `
+        <i class="fa-solid ${icon} vxl-toast-icon"></i>
+        <div class="vxl-toast-message">${message}</div>
+        <div class="vxl-toast-progress"></div>
+      `;
+      container.appendChild(toast);
+
+      setTimeout(() => toast.classList.add('show'), 10);
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 400); // Wait for transition
+      }, 4000);
+    }
+
+    let vxlConfirmCallback = null;
+
+    function showConfirm(message, title = 'Confirm Action', icon = 'fa-circle-question', onConfirm) {
+      let overlay = document.getElementById('vxl-confirm-overlay');
+      if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'vxl-confirm-overlay';
+        overlay.innerHTML = `
+          <div class="vxl-confirm-card">
+            <i id="vxl-confirm-icon-el" class="fa-solid vxl-confirm-icon"></i>
+            <div class="vxl-confirm-title" id="vxl-confirm-title"></div>
+            <div class="vxl-confirm-desc" id="vxl-confirm-desc"></div>
+            <div class="vxl-confirm-actions">
+              <button class="vxl-confirm-btn vxl-btn-cancel" onclick="closeVxlConfirm()">Cancel</button>
+              <button class="vxl-confirm-btn vxl-btn-submit" onclick="executeVxlConfirm()">Proceed</button>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(overlay);
+      }
+
+      document.getElementById('vxl-confirm-icon-el').className = `fa-solid ${icon} vxl-confirm-icon`;
+      document.getElementById('vxl-confirm-title').innerText = title;
+      document.getElementById('vxl-confirm-desc').innerHTML = message;
+
+      vxlConfirmCallback = onConfirm;
+      overlay.classList.add('show');
+    }
+
+    function closeVxlConfirm() {
+      const overlay = document.getElementById('vxl-confirm-overlay');
+      if (overlay) overlay.classList.remove('show');
+      vxlConfirmCallback = null;
+    }
+
+    function executeVxlConfirm() {
+      if (vxlConfirmCallback) vxlConfirmCallback();
+      closeVxlConfirm();
+    }
+
+    /* --- TRANSLATION SYSTEM (EN/AR) --- */
+    const translations = {
+      en: {
+        nav_lang: "Lang", nav_arch: "Architecture", nav_sol: "Vox Solutions", nav_spin: "Live Spin", nav_win: "Winners", nav_reg: "Register Now",
+        arch_eng: "Engineering & Tech", arch_ai: "AI & Automation", arch_mark: "Marketing & Creative",
+        arch_1: "Website Development", arch_2: "Web & Mobile Apps", arch_3: "Full-Stack Development", arch_4: "Dedicated Team",
+        arch_5: "AI Virtual Assistant", arch_6: "CRM Expert", arch_7: "CRM Software Solutions", arch_8: "Email Marketing",
+        arch_9: "SEO Services", arch_10: "Digital Marketing", arch_11: "Social Media Marketing", arch_12: "Content Writing", arch_13: "Graphic Design",
+        sol_ind: "Industry Suites", sol_more: "More Solutions",
+        sol_1: "VoxHospitality", sol_2: "VoxWellness", sol_3: "VoxPro", sol_4: "VoxDrive", sol_5: "VoxGov", sol_6: "VoxCard (NFC)",
+        hero_badge: "Elite Weekly Giveaway by Voxlumedia", hero_title: "Elevate Your Brand <br /><span class='text-gradient'>For Free.</span>", hero_desc: "Join our weekly VoxSpin to win premium, agency-quality social media design assets for your business. Zero cost, pure value, drawn every 7 days automatically.", hero_btn: "Join This Week's Spin <i class='fa-solid fa-arrow-right' style='margin-left:5px;'></i>",
+        spin_title: "VoxSpin <span class='text-gradient'>Live Wheel</span>", spin_desc: "Transparent weekly automated draw for active businesses.", cd_title: "Next Weekly Automated Draw In:", lbl_days: "Days", lbl_hours: "Hours", lbl_mins: "Mins", lbl_secs: "Secs", btn_locked: "<i class='fa-solid fa-lock'></i> Weekly Draw Locked", btn_unlocked: "<i class='fa-solid fa-unlock'></i> Start Admin Test Spin",
+        reg_title: "Register Your Business", reg_rule_title: "Program Rules & Capacity", reg_rule_desc: "Maximum limit is <strong>20 businesses per week</strong>. Unselected businesses will automatically <strong>carry over to the next week's draw</strong>.<br><br><span class='mandatory-ig-highlight'>MANDATORY:</span> You must follow <strong style='color:var(--primary);'>@voxlumedia</strong> on Instagram to qualify for selection!", reg_btn: "+ Enter Giveaway Pool",
+        placeholder_biz_name: "Business Name", placeholder_biz_email: "Business Email (Required)", placeholder_biz_phone: "WhatsApp / Phone Number", placeholder_niche: "Select Industry Niche", placeholder_ig: "Instagram Username (Required)", placeholder_tiktok: "TikTok Username (Optional)", placeholder_fb: "Facebook Page (Optional)", placeholder_search: "Search participant...",
+        flow_label: "Program Flow", flow_title: "How VoxSpin Works", flow_desc: "Three simple steps to win professional visual assets for your brand.", step1_title: "Free Registration", step1_desc: "Enter your business details into the entry form. No hidden fees required.", step2_title: "Wait for the Spin", step2_desc: "Every Friday, our system transparently scrambles and selects one active business.", step3_title: "Claim Your Prize", step3_desc: "If selected, our creative team will contact you directly to deliver your free asset.",
+        rost_title: "Live <span class='text-gradient'>Roster</span>", rost_desc: "Active businesses queued for this week's 7-day draw cycle (Max 20 slots).", pool_cap: "Pool Capacity:", slots: "Slots",
+        fame_title: "Hall of <span class='text-gold'>Fame</span>", fame_desc: "Brands that successfully won our weekly free design asset drop.",
+        faq_label: "Technical Details", faq_title: "Frequently Asked Questions", q1: "When does the live draw happen?", a1: "The live spin is conducted every Friday. Recordings are posted directly on Voxlumedia channels.", q2: "How will I know if my business wins?", a2: "Our official team will contact you via WhatsApp, email, or social media handles provided during entry.", q3: "Do I need to re-register every week?", a3: "No, your business stays securely in our active drawing pool permanently until selected as a winner.", q4: "What exactly is included in the prize?", a4: "One professional agency-grade social media content asset fully tailored for your brand identity.",
+        port_label: "Real Results", port_title: "A Taste of Our Success", port_desc: "See sample agency-quality assets you can win entirely for free.", port1_tag: "Social Media Content", port1_title: "High-Converting Carousel Post", port1_metric: "Engagement", port2_tag: "Brand Aesthetics", port2_title: "Premium Story Design Kit", port2_metric: "Social Reach", port3_tag: "Ad Creatives", port3_title: "Performance Marketing Banners", port3_metric: "Click-Through",
+        vs_label: "AI-Powered Audit Tool", vs_desc: "Get an instant business evaluation. Learn how easily potential customers find, trust, and purchase products from your social channels.", vs_btn: "Start Free Audit &rarr;", vc_label: "Smart Networking", vc_desc: "Upgrade your networking game with the ultimate digital business card. Share your contact info, portfolios, and links with a single tap.", vc_btn: "Get Your VoxCard &rarr;",
+        ft_ready: "Ready to <br><span class='text-gradient'>Evolve</span>", ft_init: "Initialize Link", ft_net: "The Vox Network", ft_net_1: "VoxEcom", ft_net_2: "VoxHome", ft_net_3: "VoxGov", ft_net_4: "VoxPro", ft_net_5: "VoxCard", ft_net_6: "VoxSocial Score", ft_arch: "Architecture", ft_arch_1: "AI Integration", ft_arch_2: "Web Engineering", ft_arch_3: "Search Domination", ft_arch_4: "CRM Workflows", ft_arch_5: "Creative & Design", ft_sol: "Solutions", ft_sol_1: "VoxSEO Local", ft_sol_2: "VoxVoice AI", ft_sol_3: "Social Media", ft_sol_4: "Review Recovery", ft_res: "Resources", ft_cont: "Contact", ft_port: "Our Portfolio", ft_audit: "Free Audit", ft_price: "Pricing Plans", ft_tag: "Less Stress. More Results.", ft_copy: "Copyright © 2026 Voxlumedia | Digital Agency for Branding, Design & Marketing", ft_reach: "Reach Out",
+        status_verified: "Verified", status_pool: "In Pool", status_winner: "Winner", won_on: "Won on: ", win_meta: "Our team will contact you soon."
+      },
+      ar: {
+        nav_lang: "لغة", nav_arch: "هندسة معمارية", nav_sol: "حلول فوكس", nav_spin: "سحب مباشر", nav_win: "الفائزون", nav_reg: "سجل الان",
+        arch_eng: "الهندسة والتكنولوجيا", arch_ai: "الذكاء الاصطناعي والأتمتة", arch_mark: "التسويق والإبداع",
+        arch_1: "تطوير مواقع الويب", arch_2: "تطبيقات الويب والموبايل", arch_3: "تطوير شامل (Full-Stack)", arch_4: "فريق مخصص",
+        arch_5: "مساعد افتراضي ذكي", arch_6: "خبير إدارة علاقات العملاء", arch_7: "حلول برامج CRM", arch_8: "التسويق عبر البريد الإلكتروني",
+        arch_9: "خدمات تحسين محركات البحث", arch_10: "التسويق الرقمي", arch_11: "تسويق وسائل التواصل الاجتماعي", arch_12: "كتابة المحتوى", arch_13: "تصميم الجرافيك",
+        sol_ind: "حلول الصناعة", sol_more: "المزيد من الحلول",
+        sol_1: "فوكس للضيافة", sol_2: "فوكس للصحة", sol_3: "فوكس برو", sol_4: "فوكس درايف", sol_5: "فوكس جُف", sol_6: "بطاقة فوكس (NFC)",
+        hero_badge: "هبة أسبوعية نخبوية من فوكسلوميديا", hero_title: "ارتقِ بعلامتك التجارية <br /><span class='text-gradient'>مجانًا.</span>", hero_desc: "انضم إلى VoxSpin الأسبوعي للفوز بأصول تصميم وسائط اجتماعية احترافية لعملك. بدون تكلفة، قيمة خالصة، يتم السحب كل 7 أيام تلقائيًا.", hero_btn: "انضم إلى سحب هذا الأسبوع <i class='fa-solid fa-arrow-left' style='margin-right:5px;'></i>",
+        spin_title: "عجلة <span class='text-gradient'>VoxSpin</span> المباشرة", spin_desc: "سحب آلي أسبوعي شفاف للشركات النشطة.", cd_title: "السحب الآلي الأسبوعي القادم خلال:", lbl_days: "أيام", lbl_hours: "ساعات", lbl_mins: "دقائق", lbl_secs: "ثواني", btn_locked: "<i class='fa-solid fa-lock'></i> السحب الأسبوعي مقفل", btn_unlocked: "<i class='fa-solid fa-unlock'></i> بدء سحب المشرف",
+        reg_title: "سجل عملك", reg_rule_title: "قواعد البرنامج والقدرة", reg_rule_desc: "الحد الأقصى هو <strong>20 شركة في الأسبوع</strong>. الشركات غير المحددة ستنتقل تلقائيًا <strong>إلى سحب الأسبوع التالي</strong>.<br><br><span class='mandatory-ig-highlight'>إلزامي:</span> يجب عليك متابعة <strong style='color:var(--primary);'>@voxlumedia</strong> على انستغرام لتتأهل للاختيار!", reg_btn: "+ دخول السحب",
+        placeholder_biz_name: "اسم العمل", placeholder_biz_email: "البريد الإلكتروني للعمل (مطلوب)", placeholder_biz_phone: "واتساب / رقم الهاتف", placeholder_niche: "اختر تخصص الصناعة", placeholder_ig: "اسم مستخدم إنستغرام (مطلوب)", placeholder_tiktok: "اسم مستخدم تيك توك (اختياري)", placeholder_fb: "صفحة فيسبوك (اختياري)", placeholder_search: "ابحث عن مشارك...",
+        flow_label: "سير البرنامج", flow_title: "كيف يعمل VoxSpin", flow_desc: "ثلاث خطوات بسيطة للفوز بأصول مرئية احترافية لعلامتك التجارية.", step1_title: "تسجيل مجاني", step1_desc: "أدخل تفاصيل عملك في نموذج الدخول. لا توجد رسوم خفية.", step2_title: "انتظر السحب", step2_desc: "كل يوم جمعة، يقوم نظامنا بخلط واختيار شركة نشطة واحدة بشفافية.", step3_title: "احصل على جائزتك", step3_desc: "إذا تم اختيارك، سيتواصل فريقنا الإبداعي معك مباشرة لتسليم أصلك المجاني.",
+        rost_title: "القائمة <span class='text-gradient'>المباشرة</span>", rost_desc: "الشركات النشطة المصطفة لدورة السحب لمدة 7 أيام هذا الأسبوع (الحد الأقصى 20 مقعدًا).", pool_cap: "سعة السحب:", slots: "مقاعد",
+        fame_title: "قاعة <span class='text-gold'>المشاهير</span>", fame_desc: "العلامات التجارية التي فازت بنجاح في السحب الأسبوعي للتصميم المجاني.",
+        faq_label: "التفاصيل الفنية", faq_title: "أسئلة مكررة", q1: "متى يحدث السحب المباشر؟", a1: "يتم إجراء السحب المباشر كل يوم جمعة. يتم نشر التسجيلات مباشرة على قنوات فوكسلوميديا.", q2: "كيف سأعرف إذا فاز عملي؟", a2: "سيتواصل فريقنا الرسمي معك عبر واتساب أو البريد الإلكتروني أو حسابات التواصل الاجتماعي المقدمة أثناء الدخول.", q3: "هل أحتاج إلى إعادة التسجيل كل أسبوع؟", a3: "لا، يبقى عملك بأمان في مجموعة السحب النشطة الخاصة بنا بشكل دائم حتى يتم اختياره كفائز.", q4: "ما الذي تتضمنه الجائزة بالضبط؟", a4: "أصل محتوى وسائط اجتماعية احترافي واحد مصمم بالكامل لهوية علامتك التجارية.",
+        port_label: "نتائج حقيقية", port_title: "تذوق نجاحنا", port_desc: "شاهد نماذج الأصول عالية الجودة التي يمكنك الفوز بها مجانًا بالكامل.", port1_tag: "محتوى السوشيال ميديا", port1_title: "منشور دوار عالي التحويل", port1_metric: "التفاعل", port2_tag: "جماليات العلامة التجارية", port2_title: "مجموعة تصميم قصص مميزة", port2_metric: "الوصول الاجتماعي", port3_tag: "إعلانات إبداعية", port3_title: "لافتات تسويق الأداء", port3_metric: "نسبة النقر",
+        vs_label: "أداة تدقيق مدعومة بالذكاء الاصطناعي", vs_desc: "احصل على تقييم فوري لعملك. تعرف على مدى سهولة عثور العملاء المحتملين على منتجاتك وشرائها من قنواتك الاجتماعية.", vs_btn: "ابدأ التدقيق المجاني &larr;", vc_label: "التواصل الذكي", vc_desc: "ارتقِ بلعبة التواصل الخاصة بك مع بطاقة العمل الرقمية القصوى. شارك معلومات الاتصال الخاصة بك والمحافظ والروابط بنقرة واحدة.", vc_btn: "احصل على بطاقتك &larr;",
+        ft_ready: "جاهز <br><span class='text-gradient'>للتطور</span>", ft_init: "تهيئة الرابط", ft_net: "شبكة فوكس", ft_net_1: "فوكس إي كوم", ft_net_2: "فوكس هوم", ft_net_3: "فوكس جُف", ft_net_4: "فوكس برو", ft_net_5: "فوكس كارد", ft_net_6: "نقاط فوكس سوشيال", ft_arch: "هندسة معمارية", ft_arch_1: "تكامل الذكاء الاصطناعي", ft_arch_2: "هندسة الويب", ft_arch_3: "السيطرة على البحث", ft_arch_4: "سير عمل إدارة العلاقات", ft_arch_5: "الإبداع والتصميم", ft_sol: "الحلول", ft_sol_1: "فوكس سيو المحلي", ft_sol_2: "فوكس فويس ذكاء اصطناعي", ft_sol_3: "وسائل التواصل الاجتماعي", ft_sol_4: "استعادة التقييمات", ft_res: "الموارد", ft_cont: "اتصل بنا", ft_port: "محفظتنا", ft_audit: "تدقيق مجاني", ft_price: "خطط الأسعار", ft_tag: "ضغط أقل. نتائج lebih banyak.", ft_copy: "حقوق النشر © 2026 فوكسلوميديا | وكالة رقمية للعلامات التجارية والتصميم والتسويق", ft_reach: "تواصل معنا",
+        status_verified: "تم التحقق", status_pool: "في السحب", status_winner: "فائز", won_on: "فاز dalam: ", win_meta: "سيتصل بك فريقنا قريبًا."
+      }
+    };
+
+    let currentLangState = 'en';
+
+    function applyTranslations(lang) {
+      currentLangState = lang;
+      const dict = translations[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) {
+          if (el.classList.contains('faq-question')) {
+            el.innerHTML = dict[key] + ' <span class="faq-icon"></span>';
+          } else {
+            el.innerHTML = dict[key];
+          }
+        }
+      });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (dict[key]) el.setAttribute('placeholder', dict[key]);
+      });
+
+      renderParticipantGrid();
+      renderWinnersWall(entries.filter(e => e.status === 'winner'));
+    }
+
+    window.switchLang = function (lang, e) {
+      if (e) e.preventDefault();
+      const url = new URL(window.location);
+      url.searchParams.set('lang', lang);
+      window.history.pushState({}, '', url);
+
+      if (lang === 'ar') {
+        document.documentElement.setAttribute('dir', 'rtl');
+        document.documentElement.setAttribute('lang', 'ar');
+      } else {
+        document.documentElement.setAttribute('dir', 'ltr');
+        document.documentElement.setAttribute('lang', 'en-US');
+      }
+      applyTranslations(lang);
+    }
+
+    const API_URL = "/api";
+
+    function checkAdminStatus() {
+      const spinBtn = document.getElementById('spin-btn');
+      if (!spinBtn) return;
+
+      const token = localStorage.getItem('voxspin_admin_token');
+      if (token) {
+        spinBtn.disabled = false;
+        spinBtn.innerHTML = "<i class='fa-solid fa-unlock'></i> Start Admin Test Spin";
+        spinBtn.removeAttribute('data-i18n');
+        spinBtn.style.background = "linear-gradient(135deg, #8b5cf6, #d946ef)";
+        spinBtn.style.color = "#fff";
+        spinBtn.style.border = "none";
+        spinBtn.style.boxShadow = "0 10px 25px rgba(217, 70, 239, 0.4)";
+      } else {
+        spinBtn.disabled = true;
+        spinBtn.innerHTML = translations[currentLangState] ? translations[currentLangState].btn_locked : "<i class='fa-solid fa-lock'></i> Weekly Draw Locked";
+        spinBtn.setAttribute('data-i18n', 'btn_locked');
+        spinBtn.style.background = "rgba(0, 242, 254, 0.05)";
+        spinBtn.style.color = "var(--primary)";
+        spinBtn.style.border = "2px solid var(--primary)";
+        spinBtn.style.boxShadow = "none";
+      }
+    }
+
+    function initApp() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const initialLang = urlParams.get('lang') === 'ar' ? 'ar' : 'en';
+      if (initialLang === 'ar') {
+        document.documentElement.setAttribute('dir', 'rtl');
+        document.documentElement.setAttribute('lang', 'ar');
+      }
+      applyTranslations(initialLang);
+
+      fetchParticipants();
+      setInterval(fetchParticipants, 120000);
+
+      checkAdminStatus();
+      setInterval(checkAdminStatus, 2000);
+
+      initWeeklyCountdown();
+      initFAQ();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+      initApp();
+    }
+
+    function initWeeklyCountdown() {
+      let targetTime = localStorage.getItem('voxspin_next_draw');
+      const now = new Date().getTime();
+      if (!targetTime || parseInt(targetTime) < now) {
+        targetTime = now + (7 * 24 * 60 * 60 * 1000);
+        localStorage.setItem('voxspin_next_draw', targetTime);
+      }
+      setInterval(() => {
+        const currentTime = new Date().getTime();
+        const distance = targetTime - currentTime;
+        if (distance < 0) {
+          targetTime = new Date().getTime() + (7 * 24 * 60 * 60 * 1000);
+          localStorage.setItem('voxspin_next_draw', targetTime);
+        }
+        document.getElementById('cd-days').innerText = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
+        document.getElementById('cd-hours').innerText = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+        document.getElementById('cd-mins').innerText = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+        document.getElementById('cd-secs').innerText = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
+      }, 1000);
+    }
+
+    let entries = [];
+    let activeEntries = [];
+    let isSpinning = false;
+    const canvas = document.getElementById('wheel-canvas');
+    const ctx = canvas.getContext('2d');
+    let currentAngle = 0;
+
+    async function fetchParticipants() {
+      try {
+        const response = await fetch(`${API_URL}/participants`);
+        if (!response.ok) throw new Error(`Network error`);
+
+        const result = await response.json();
+        if (result.status === "success" && Array.isArray(result.data)) {
+          entries = result.data.map(item => ({
+            id: item.id,
+            company: item.companyName || item.name || "Unknown",
+            social: item.socialMedia || item.social || "unknown",
+            tiktok: item.tiktok || '',
+            facebook: item.facebook || '',
+            phone: item.phone || '',
+            status: item.status || 'pending',
+            date: item.date,
+            winnerDate: item.winnerDate
+          }));
+
+          activeEntries = entries.filter(e => e.status !== 'winner');
+          const winnerEntries = entries.filter(e => e.status === 'winner');
+
+          const badge = document.getElementById('total-count-badge');
+          if (badge) badge.innerText = activeEntries.length;
+
+          renderParticipantGrid();
+          renderWinnersWall(winnerEntries);
+          if (!isSpinning) drawWheel();
+        }
+      } catch (error) {
+        console.error("Failed to fetch API data:", error);
+        const grid = document.getElementById('participant-grid');
+        if (grid && activeEntries.length === 0) {
+          grid.innerHTML = `<div style="text-align:center; padding:30px; color:var(--danger); border:1px solid rgba(239, 68, 68, 0.3); border-radius:12px; background:rgba(239, 68, 68, 0.05);">⚠️ Data tidak dapat diambil. Backend mungkin offline.</div>`;
+        }
+      }
+    }
+
+    function drawWheel() {
+      if (!ctx) return;
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const radius = canvas.width / 2 - 20;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const numSegments = Math.max(activeEntries.length, 1);
+      const arcSize = (2 * Math.PI) / numSegments;
+      const cyberColors = ['#0f172a', '#1e1b4b', '#1e293b', '#312e81', '#111827'];
+
+      if (activeEntries.length === 0) {
+        ctx.beginPath(); ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+        ctx.fillStyle = '#0f172a'; ctx.fill();
+        ctx.fillStyle = '#f8f9fa'; ctx.font = 'bold 24px Outfit'; ctx.textAlign = 'center';
+        ctx.fillText('Waiting for Participants...', centerX, centerY);
+        return;
+      }
+
+      const fontSize = Math.max(14, Math.min(22, 350 / numSegments));
+      activeEntries.forEach((entry, i) => {
+        const startAngle = currentAngle + i * arcSize;
+        const endAngle = startAngle + arcSize;
+        ctx.beginPath(); ctx.moveTo(centerX, centerY); ctx.arc(centerX, centerY, radius, startAngle, endAngle); ctx.closePath();
+        ctx.fillStyle = cyberColors[i % cyberColors.length]; ctx.fill();
+        ctx.lineWidth = 2; ctx.strokeStyle = 'rgba(0, 242, 254, 0.4)'; ctx.stroke();
+        ctx.save(); ctx.translate(centerX, centerY); ctx.rotate(startAngle + arcSize / 2); ctx.textAlign = 'right';
+        ctx.fillStyle = '#ffffff'; ctx.font = `bold ${fontSize}px 'Plus Jakarta Sans'`; ctx.shadowColor = 'rgba(0,0,0,0.9)'; ctx.shadowBlur = 6; ctx.shadowOffsetX = 1; ctx.shadowOffsetY = 1;
+        ctx.fillText((entry.company || "").toUpperCase(), radius - 45, fontSize / 3); ctx.restore();
+      });
+    }
+
+    const spinBtnNode = document.getElementById('spin-btn');
+    const hubBtnNode = document.getElementById('wheel-spin-trigger');
+
+    // BUG FIX KECEPATAN PUTARAN WHEEL
+    async function startWheelSpin() {
+      if (!localStorage.getItem('voxspin_admin_token')) {
+        showConfirm("The 7-day automated draw is controlled by the weekly schedule. Admin privileges are required to bypass and perform a test spin.", "Weekly Draw Locked", "fa-lock", () => {
+        });
+        return;
+      }
+      if (isSpinning || activeEntries.length === 0) return;
+
+      isSpinning = true;
+      spinBtnNode.disabled = true;
+      spinBtnNode.innerText = "Spinning Wheel...";
+      document.getElementById('winner-banner').style.display = 'none';
+
+      const randomIndex = Math.floor(Math.random() * activeEntries.length);
+      const winner = activeEntries[randomIndex];
+      const numSegments = activeEntries.length;
+      const arcSize = (2 * Math.PI) / numSegments;
+
+      const targetSegmentCenter = randomIndex * arcSize + arcSize / 2;
+      const startAngle = currentAngle;
+
+      // LOGIKA ROTASI RELATIF BARU AGAR SELALU BERPUTAR 12X DENGAN CEPAT
+      const currentOffset = startAngle % (2 * Math.PI);
+      let targetOffset = (1.5 * Math.PI - targetSegmentCenter) % (2 * Math.PI);
+      if (targetOffset < 0) targetOffset += 2 * Math.PI;
+
+      let neededRotation = targetOffset - currentOffset;
+      if (neededRotation < 0) neededRotation += 2 * Math.PI;
+
+      const extraSpins = 12 * 2 * Math.PI; // 12 putaran penuh tambahan
+      const targetAngle = startAngle + extraSpins + neededRotation;
+      const duration = 5000; // Selesai dalam 5 detik
+      const startTime = performance.now();
+
+      const spinSound = document.getElementById('sound-spin');
+      if (spinSound) { spinSound.currentTime = 0; spinSound.play().catch(() => { }); }
+
+      function animateWheel(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const easeOut = 1 - Math.pow(1 - progress, 4); // Efek kurva lambat natural
+        currentAngle = startAngle + (targetAngle - startAngle) * easeOut;
+        drawWheel();
+
+        if (progress < 1) {
+          requestAnimationFrame(animateWheel);
+        } else {
+          isSpinning = false;
+          checkAdminStatus();
+          if (spinSound) spinSound.pause();
+          document.getElementById('winner-name').innerText = `${winner.company} Selected!`;
+          document.getElementById('winner-meta').innerText = `Instagram: @${winner.social} (Verified Follower)`;
+          document.getElementById('winner-banner').style.display = 'block';
+
+          fetch(`${API_URL}/set-winner/${winner.id}`, { method: 'POST' })
+            .then(() => fetchParticipants())
+            .catch(e => console.error("Error setting winner", e));
+        }
+      }
+      requestAnimationFrame(animateWheel);
+    }
+
+    if (spinBtnNode) spinBtnNode.addEventListener('click', startWheelSpin);
+    if (hubBtnNode) hubBtnNode.addEventListener('click', startWheelSpin);
+
+    window.addEntry = async function (e) {
+      e.preventDefault();
+
+      const submitBtn = document.getElementById('submit-btn');
+
+      if (activeEntries.length >= 20) {
+        showToast("The limit of 20 businesses for this week has been reached. Your business will be automatically queued with carry-over for next week!", "warning");
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.innerText = "Registering & Verifying Follow...";
+
+      const payload = {
+        companyName: document.getElementById('biz-name').value.trim(),
+        email: document.getElementById('biz-email').value.trim(),
+        phone: document.getElementById('biz-phone').value.trim(),
+        website: document.getElementById('biz-website').value.trim(),
+        niche: document.getElementById('biz-niche').value,
+        address: document.getElementById('biz-address').value.trim(),
+        socialMedia: document.getElementById('biz-ig').value.trim().toLowerCase(),
+        tiktok: document.getElementById('biz-tiktok').value.trim().toLowerCase(),
+        facebook: document.getElementById('biz-fb').value.trim().toLowerCase(),
+      };
+
+      try {
+        const response = await fetch(`${API_URL}/register`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+        const data = await response.json();
+
+        if (response.ok && data.status === "success") {
+          e.target.reset();
+          fetchParticipants();
+          showToast("🎉 Registration successful! You are now securely in the weekly draw pool.", "success");
+        } else {
+          throw new Error(data.detail || "Registration failed. Limit reached or error.");
+        }
+      } catch (error) {
+        showToast(error.message, "error");
+      }
+
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = translations[currentLangState].reg_btn;
+    };
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    }
+
+    function renderParticipantGrid() {
+      const grid = document.getElementById('participant-grid');
+      if (!grid) return;
+
+      const searchInput = document.getElementById('search-input');
+      const search = searchInput ? searchInput.value.toLowerCase() : '';
+      const filtered = activeEntries.filter(e => (e.company || "").toLowerCase().includes(search));
+
+      const txtVerified = translations[currentLangState].status_verified;
+
+      if (filtered.length > 0) {
+        grid.innerHTML = filtered.map(e => {
+          const firstLetter = (e.company.charAt(0) || "V").toUpperCase();
+          return `
+          <div class="participant-item">
+            <div class="p-info">
+              <div class="p-avatar">${firstLetter}</div>
+              <div class="p-details">
+                <span class="p-name">${escapeHtml(e.company)}</span>
+                <div class="social-tags">
+                  <span><i class="fa-brands fa-instagram"></i> @${escapeHtml(e.social)}</span>
+                  ${e.tiktok ? `<span><i class="fa-brands fa-tiktok"></i> @${escapeHtml(e.tiktok)}</span>` : ''}
+                  ${e.facebook ? `<span><i class="fa-brands fa-facebook"></i> ${escapeHtml(e.facebook)}</span>` : ''}
+                </div>
+              </div>
+            </div>
+            <div class="badge-status-group">
+                <span class="badge-verified"><i class="fa-solid fa-circle-check"></i> ${txtVerified}</span>
+            </div>
+          </div>`;
+        }).join('');
+      } else {
+        grid.innerHTML = `<div style="text-align:center; padding:30px; color:var(--text-dim);">No active participants in queue</div>`;
+      }
+    }
+
+    function renderWinnersWall(winners) {
+      const grid = document.getElementById('winners-grid');
+      if (!grid) return;
+
+      const txtWinner = translations[currentLangState].status_winner;
+      const txtWonOn = translations[currentLangState].won_on;
+
+      if (winners && winners.length > 0) {
+        grid.innerHTML = winners.map(w => {
+          const winDateObj = w.winnerDate ? new Date(w.winnerDate) : (w.date ? new Date(w.date) : new Date());
+          const displayDate = winDateObj.toLocaleDateString(currentLangState === 'ar' ? 'ar-EG' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+          const firstLetter = (w.company.charAt(0) || "W").toUpperCase();
+
+          return `
+          <div class="participant-item" style="border-color:var(--accent); background:rgba(245,158,11,0.05);">
+            <div class="p-info">
+              <div class="p-avatar" style="background: linear-gradient(135deg, #ffd700, #ffb300); color: #000; border:none;"><i class="fa-solid fa-star"></i></div>
+              <div class="p-details">
+                <span class="p-name" style="color:var(--accent);">${escapeHtml(w.company)}</span>
+                <div class="social-tags">
+                  <span><i class="fa-brands fa-instagram"></i> @${escapeHtml(w.social)}</span>
+                </div>
+                <div style="font-size:0.85rem; color:var(--text-light); margin-top:4px;"><i class="fa-regular fa-calendar-check" style="color:var(--primary);"></i> ${txtWonOn} <strong>${displayDate}</strong></div>
+              </div>
+            </div>
+            <div class="badge-status-group">
+                <span class="badge-verified" style="color:var(--accent); border-color:var(--accent); background:transparent;"><i class="fa-solid fa-trophy"></i> ${txtWinner}</span>
+            </div>
+          </div>`;
+        }).join('');
+      } else {
+        grid.innerHTML = `<div style="text-align:center; padding:30px; color:var(--text-dim);">No winners recorded yet for this season</div>`;
+      }
+    }
+
+    const sInput = document.getElementById('search-input');
+    if (sInput) sInput.addEventListener('input', renderParticipantGrid);
+
+    const hamburger = document.getElementById('hamburger-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileLinks = document.querySelectorAll('.mobile-link-item');
+    if (hamburger && mobileMenu && !hamburger.dataset.bound) {
+      hamburger.dataset.bound = "true";
+      hamburger.addEventListener('click', () => { hamburger.classList.toggle('active'); mobileMenu.classList.toggle('active'); document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : ''; });
+      mobileLinks.forEach(link => { link.addEventListener('click', () => { hamburger.classList.remove('active'); mobileMenu.classList.remove('active'); document.body.style.overflow = ''; }); });
+    }
+
+    const mobileToggles = document.querySelectorAll('.mobile-dropdown-toggle');
+    mobileToggles.forEach(toggle => {
+      if (!toggle.dataset.bound) {
+        toggle.dataset.bound = "true";
+        toggle.addEventListener('click', function (e) {
+          e.preventDefault();
+          const parent = this.parentElement;
+          const menu = parent.querySelector('.mobile-dropdown-menu');
+          parent.classList.toggle('active'); this.classList.toggle('active');
+          menu.style.maxHeight = parent.classList.contains('active') ? menu.scrollHeight + "px" : null;
+        });
+      }
+    });
+
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('vxl-nav');
+      if (nav) { if (window.scrollY > 50) nav.classList.add('vxl-scrolled'); else nav.classList.remove('vxl-scrolled'); }
+    });
+
+    function initFAQ() {
+      const questions = document.querySelectorAll('.faq-question');
+      questions.forEach(q => {
+        if (!q.dataset.bound) {
+          q.dataset.bound = "true";
+          q.addEventListener('click', () => {
+            const item = q.parentElement;
+            const isActive = item.classList.contains('active');
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+            if (!isActive) {
+              item.classList.add('active');
+            }
+          });
+        }
+      });
+    }
+
+    if (typeof gsap !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
+      if (!window.vxlGsapInitialized) {
+        window.vxlGsapInitialized = true;
+        gsap.from(".hero-content-split > *", { y: 30, opacity: 0, duration: 1, stagger: 0.2, ease: "power3.out", delay: 0.2 });
+        gsap.utils.toArray('.gs-reveal').forEach(elem => {
+          gsap.from(elem, { scrollTrigger: { trigger: elem, start: "top 85%" }, y: 40, opacity: 0, duration: 0.8, ease: "power2.out" });
+        });
+      }
+    }
+  </script>
+  <audio id="sound-spin" src="https://www.soundjay.com/misc/sounds/spinning-wheel-1.mp3" preload="auto"></audio>
+</body>
+
+</html>
